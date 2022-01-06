@@ -43,7 +43,7 @@
               }
             }
           ],
-          "_postman_id": "a7b862f9-ec41-483d-92c4-f29fae47b82e",
+          "id": "a7b862f9-ec41-483d-92c4-f29fae47b82e",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -52,10 +52,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "lorem ipsum",
-              "options": {
-                "raw": {}
-              }
+              "raw": "lorem ipsum"
             },
             "url": "{{base_url}}/remote.php/webdav/{{filename}}"
           },
@@ -94,7 +91,7 @@
               }
             }
           ],
-          "_postman_id": "d98429f3-7322-43cd-8893-83152f9bc156",
+          "id": "d98429f3-7322-43cd-8893-83152f9bc156",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -189,7 +186,7 @@
               }
             }
           ],
-          "_postman_id": "045cecae-64b3-4dfa-b439-b6c1819039db",
+          "id": "045cecae-64b3-4dfa-b439-b6c1819039db",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -251,7 +248,7 @@
               }
             }
           ],
-          "_postman_id": "9e740288-3850-48c6-9fff-bb206dd26ab1",
+          "id": "9e740288-3850-48c6-9fff-bb206dd26ab1",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -290,7 +287,7 @@
           ]
         }
       ],
-      "_postman_id": "9501ed42-5b31-474e-a6ea-3734cd2aaade"
+      "id": "9501ed42-5b31-474e-a6ea-3734cd2aaade"
     },
     {
       "name": "Shares",
@@ -361,7 +358,7 @@
               }
             }
           ],
-          "_postman_id": "35af55ca-289c-4ebb-bafa-e5902ddd3398",
+          "id": "35af55ca-289c-4ebb-bafa-e5902ddd3398",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -392,10 +389,7 @@
                   "type": "text",
                   "disabled": true
                 }
-              ],
-              "options": {
-                "formdata": {}
-              }
+              ]
             },
             "url": {
               "raw": "{{base_url}}/ocs/v2.php/apps/files_sharing/api/v1/shares?format=json",
@@ -435,7 +429,7 @@
               }
             }
           ],
-          "_postman_id": "493fcd7b-c527-46e8-8307-939abeb2886e",
+          "id": "493fcd7b-c527-46e8-8307-939abeb2886e",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -497,7 +491,7 @@
         },
         {
           "name": "accept-share",
-          "_postman_id": "d3586ae9-23dc-455e-93c1-58285b63f378",
+          "id": "d3586ae9-23dc-455e-93c1-58285b63f378",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -517,7 +511,7 @@
         },
         {
           "name": "update-share",
-          "_postman_id": "df12300d-65e3-4065-b8dc-ce60c60d1d92",
+          "id": "df12300d-65e3-4065-b8dc-ce60c60d1d92",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -539,10 +533,7 @@
                   "value": "3",
                   "type": "text"
                 }
-              ],
-              "options": {
-                "formdata": {}
-              }
+              ]
             },
             "url": "{{base_url}}/ocs/v1.php/apps/files_sharing/api/v1/shares/5631c499-12d7-457b-896c-5eda9b7d4820"
           },
@@ -550,7 +541,7 @@
         },
         {
           "name": "remove-share",
-          "_postman_id": "1b84cdb3-f7bd-4158-923c-c1d8fd08e499",
+          "id": "1b84cdb3-f7bd-4158-923c-c1d8fd08e499",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -562,14 +553,14 @@
           "response": []
         }
       ],
-      "_postman_id": "bab1f694-42f2-40be-93c2-44d4b43f8526"
+      "id": "bab1f694-42f2-40be-93c2-44d4b43f8526"
     },
     {
       "name": "Accounts",
       "item": [
         {
           "name": "add-user",
-          "_postman_id": "53c8fe08-68ca-4bc4-8c11-2353b9af6693",
+          "id": "53c8fe08-68ca-4bc4-8c11-2353b9af6693",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -618,10 +609,7 @@
                   "value": "lm10@msn.cc",
                   "type": "default"
                 }
-              ],
-              "options": {
-                "formdata": {}
-              }
+              ]
             },
             "url": {
               "raw": "{{base_url}}/ocs/v2.php/cloud/users?format=json",
@@ -646,7 +634,7 @@
         },
         {
           "name": "list-users",
-          "_postman_id": "63396abf-aa16-4cdf-be0f-3ad41186cbe9",
+          "id": "63396abf-aa16-4cdf-be0f-3ad41186cbe9",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -676,7 +664,7 @@
         },
         {
           "name": "retrieve-user",
-          "_postman_id": "97f8554f-3e28-4bdb-8e59-f6ff62da2c60",
+          "id": "97f8554f-3e28-4bdb-8e59-f6ff62da2c60",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -707,7 +695,7 @@
         },
         {
           "name": "disable-user",
-          "_postman_id": "39867295-8162-4af0-aaca-508cc9feea69",
+          "id": "39867295-8162-4af0-aaca-508cc9feea69",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -740,7 +728,7 @@
         },
         {
           "name": "delete-user",
-          "_postman_id": "0e98f1ed-fb57-49d3-801f-a3f63b1753b5",
+          "id": "0e98f1ed-fb57-49d3-801f-a3f63b1753b5",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
           },
@@ -768,9 +756,22 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "New Request",
+          "id": "e9991baf-9067-4782-a3fe-3fd4d6322006",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": null
+          },
+          "response": []
         }
       ],
-      "_postman_id": "18277a36-ba99-4751-b1ee-93d309f45c2e"
+      "id": "18277a36-ba99-4751-b1ee-93d309f45c2e"
     }
   ],
   "auth": {
