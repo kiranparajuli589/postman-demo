@@ -1,0 +1,926 @@
+{
+	"info": {
+		"_postman_id": "3a4c805e-4205-4bbd-ba3e-ba3f7224647b",
+		"name": "Owncloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Resources",
+			"item": [
+				{
+					"name": "create-file",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should have status code as 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"filename\", \"lorem.txt\")",
+									"",
+									"pm.sendRequest({",
+									"  method: 'delete',",
+									"  url: pm.environment.get('base_url') + \"/remote.php/webdav/\" + pm.environment.get(\"filename\"),",
+									"  header: { ",
+									"    'Authorization': pm.environment.get(\"basic_auth\")",
+									"  }",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "lorem ipsum"
+						},
+						"url": {
+							"raw": "{{base_url}}/remote.php/webdav/{{filename}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"remote.php",
+								"webdav",
+								"{{filename}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-file",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should have status code as 207\", function () {",
+									"    pm.response.to.have.status(207);",
+									"});",
+									"",
+									"pm.test(\"should match the response href\", function () {",
+									"    var xml2JsonData = xml2Json(responseBody);",
+									"    console.log(xml2JsonData)",
+									"    var actualHref = xml2JsonData[\"d:multistatus\"][\"d:response\"][0][\"d:href\"]",
+									"    pm.expect(actualHref).to.eq(\"/remote.php/dav/files/admin/lorem.txt\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PROPFIND",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{basic_auth}}",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "text/xml",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/remote.php/dav/files/admin/{{filename}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"remote.php",
+								"dav",
+								"files",
+								"admin",
+								"{{filename}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "PROPFIND",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{basic_auth}}",
+										"type": "default",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/remote.php/dav/files/admin/{{filename}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"remote.php",
+										"dav",
+										"files",
+										"admin",
+										"{{filename}}"
+									]
+								}
+							},
+							"status": "Multi-Status (WebDAV) (RFC 4918)",
+							"code": 207,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "<?xml version=\"1.0\"?>\n<d:multistatus xmlns:d=\"DAV:\" xmlns:s=\"http://sabredav.org/ns\" xmlns:oc=\"http://owncloud.org/ns\">\n    <d:response>\n        <d:href>/core/remote.php/dav/files/admin/lorem.txt</d:href>\n        <d:propstat>\n            <d:prop>\n                <d:getlastmodified>Thu, 06 Jan 2022 15:10:34 GMT</d:getlastmodified>\n                <d:getcontentlength>11</d:getcontentlength>\n                <d:resourcetype/>\n                <d:getetag>&quot;34a2f9003bca011e3c0075802e58d988&quot;</d:getetag>\n                <d:getcontenttype>text/plain</d:getcontenttype>\n            </d:prop>\n            <d:status>HTTP/1.1 200 OK</d:status>\n        </d:propstat>\n    </d:response>\n</d:multistatus>"
+						},
+						{
+							"name": "not found",
+							"originalRequest": {
+								"method": "PROPFIND",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{basic_auth}}",
+										"type": "default",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/remote.php/dav/files/admin/{{filename}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"remote.php",
+										"dav",
+										"files",
+										"admin",
+										"{{filename}}"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<d:error xmlns:d=\"DAV:\" xmlns:s=\"http://sabredav.org/ns\">\n    <s:exception>Sabre\\DAV\\Exception\\NotFound</s:exception>\n    <s:message>File with name lorem.txt could not be located</s:message>\n</d:error>"
+						}
+					]
+				},
+				{
+					"name": "rename-file",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should have status code as\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    pm.environment.set(\"filename\", \"new_lorem.txt\")",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "MOVE",
+						"header": [
+							{
+								"key": "Destination",
+								"value": "{{base_url}}/remote.php/webdav/new_lorem.txt",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/remote.php/webdav/{{filename}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"remote.php",
+								"webdav",
+								"{{filename}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "not found",
+							"originalRequest": {
+								"method": "PROPFIND",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{basic_auth}}",
+										"type": "default",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/remote.php/dav/files/admin/lorem.txt",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"remote.php",
+										"dav",
+										"files",
+										"admin",
+										"lorem.txt"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<d:error xmlns:d=\"DAV:\" xmlns:s=\"http://sabredav.org/ns\">\n    <s:exception>Sabre\\DAV\\Exception\\NotFound</s:exception>\n    <s:message>File with name lorem.txt could not be located</s:message>\n</d:error>"
+						}
+					]
+				},
+				{
+					"name": "delete-file",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should have status code as\", function () {",
+									"    pm.response.to.have.status(204);",
+									"    // revert to previous stage",
+									"    pm.environment.set(\"filename\", \"lorem.txt\")",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/remote.php/webdav/{{filename}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"remote.php",
+								"webdav",
+								"{{filename}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "not found",
+							"originalRequest": {
+								"method": "PROPFIND",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{basic_auth}}",
+										"type": "default",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "text/xml",
+										"type": "default"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/remote.php/dav/files/admin/lorem.txt",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"remote.php",
+										"dav",
+										"files",
+										"admin",
+										"lorem.txt"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<d:error xmlns:d=\"DAV:\" xmlns:s=\"http://sabredav.org/ns\">\n    <s:exception>Sabre\\DAV\\Exception\\NotFound</s:exception>\n    <s:message>File with name lorem.txt could not be located</s:message>\n</d:error>"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Shares",
+			"item": [
+				{
+					"name": "create-share",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({",
+									"    url: pm.environment.get('base_url') + '/remote.php/webdav/' + \"lorem.txt\",",
+									"    method: \"PUT\",",
+									"    header: \"Authorization: \" + pm.environment.get('basic_auth'),",
+									"    body: {",
+									"        mode: \"raw\",",
+									"        raw: \"some content\"",
+									"    }",
+									"}, function (err, response) {",
+									"    pm.expect(err).to.not.be.ok;",
+									"});",
+									"",
+									"pm.sendRequest({",
+									"    url: pm.environment.get('base_url') + '/ocs/v2.php/cloud/users',",
+									"    method: \"POST\",",
+									"    header: {",
+									"        'Authorization': pm.environment.get(\"basic_auth\"),",
+									"        'content-type': \"application/x-www-form-urlencoded\"",
+									"    },",
+									"    body: {",
+									"        mode: \"urlencoded\",",
+									"        urlencoded: [",
+									"            {key: \"userid\", value: \"lm10\"},",
+									"            {key: \"password\", value: \"lm10\"},",
+									"            {key: \"email\", value: \"lm10@msn.cc\"},",
+									"        ]",
+									"    },",
+									"}, function (err, response) {",
+									"    pm.expect(err).to.not.be.ok;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonResponse = JSON.parse(responseBody)",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.expect(jsonResponse.ocs.meta.statuscode).to.eq(200)",
+									"});",
+									"",
+									"pm.test(\"should match the reciever and file target\", function () {",
+									"    pm.expect(jsonResponse.ocs.data.share_type).to.eq(0)",
+									"    pm.expect(jsonResponse.ocs.data.uid_owner).to.eq(pm.environment.get(\"username\"))",
+									"    pm.expect(jsonResponse.ocs.data.path).to.eq('/' + pm.environment.get(\"filename\"))",
+									"    pm.expect(jsonResponse.ocs.data.file_target).to.eq('/Shares/' + pm.environment.get(\"filename\"))",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "shareType",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "shareWith",
+									"value": "lm10",
+									"type": "text"
+								},
+								{
+									"key": "path",
+									"value": "lorem.txt",
+									"type": "text"
+								},
+								{
+									"key": "permissions",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/ocs/v2.php/apps/files_sharing/api/v1/shares?format=json",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v2.php",
+								"apps",
+								"files_sharing",
+								"api",
+								"v1",
+								"shares"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list-shares",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "lm10",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "lm10",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ocs/v2.php/apps/files_sharing/api/v1/shares?format=json&include_tags=false&shared_with_me=true&state=all",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v2.php",
+								"apps",
+								"files_sharing",
+								"api",
+								"v1",
+								"shares"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "json"
+								},
+								{
+									"key": "reshares",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "include_tags",
+									"value": "false"
+								},
+								{
+									"key": "shared_with_me",
+									"value": "true"
+								},
+								{
+									"key": "state",
+									"value": "all"
+								},
+								{
+									"key": "share_types",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "accept-share",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "uu2",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "uu2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ocs/v2.php/apps/files_sharing/api/v1/shares/pending/2205751e-290f-489a-8d40-bcf1f799ed0d",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v2.php",
+								"apps",
+								"files_sharing",
+								"api",
+								"v1",
+								"shares",
+								"pending",
+								"2205751e-290f-489a-8d40-bcf1f799ed0d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-share",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "uu1",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "uu1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "permissions",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/ocs/v1.php/apps/files_sharing/api/v1/shares/5631c499-12d7-457b-896c-5eda9b7d4820",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v1.php",
+								"apps",
+								"files_sharing",
+								"api",
+								"v1",
+								"shares",
+								"5631c499-12d7-457b-896c-5eda9b7d4820"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove-share",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ocs/v2.php/apps/files_sharing/api/v1/shares/0a1c5801-ad0d-409b-9359-5e4b4ce4d46a",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v2.php",
+								"apps",
+								"files_sharing",
+								"api",
+								"v1",
+								"shares",
+								"0a1c5801-ad0d-409b-9359-5e4b4ce4d46a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "add-user",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{basic_auth}}",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "lm10",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "lm10",
+									"type": "default"
+								},
+								{
+									"key": "userid",
+									"value": "lm10",
+									"type": "default"
+								},
+								{
+									"key": "displayname",
+									"value": "Lionel Messi",
+									"type": "default"
+								},
+								{
+									"key": "email",
+									"value": "lm10@msn.cc",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/ocs/v2.php/cloud/users?format=json",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v2.php",
+								"cloud",
+								"users"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list-users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ocs/v2.php/cloud/users?format=json",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v2.php",
+								"cloud",
+								"users"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retrieve-user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ocs/v2.php/cloud/users/lm10?format=json",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v2.php",
+								"cloud",
+								"users",
+								"lm10"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "json"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "disable-user",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "username",
+								"value": "uu2",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "enabled",
+								"value": "True",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/ocs/v1.php/cloud/users/lm10/disable",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v1.php",
+								"cloud",
+								"users",
+								"lm10",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ocs/v2.php/cloud/users/lm10?format=json",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ocs",
+								"v2.php",
+								"cloud",
+								"users",
+								"lm10"
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "json"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Require the crypto-js module",
+					"var CryptoJS = require(\"crypto-js\")",
+					"",
+					"const username = pm.environment.get('username')",
+					"const password = pm.environment.get('password')",
+					"",
+					"// parse the username and password env vars",
+					"const parsedCredentials = CryptoJS.enc.Utf8.parse(`${username}:${password}`)",
+					"",
+					"// encode the parsed value",
+					"const encodedCredentials = CryptoJS.enc.Base64.stringify(parsedCredentials)",
+					"",
+					"// set the values as an environment variable and use in the request",
+					"pm.environment.set(\"basic_auth\", `Basic ${encodedCredentials}`)",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
