@@ -29,15 +29,15 @@
               "script": {
                 "id": "af903cae-5426-48c4-9914-c5c3fb3d68c8",
                 "exec": [
-                  "pm.environment.set(\"filename\", \"lorem.txt\")",
+                  "pm.variables.set(\"filename\", \"lorem.txt\")",
                   "",
-                  "pm.sendRequest({",
+                  "var options = {",
                   "  method: 'delete',",
-                  "  url: pm.environment.get('base_url') + \"/remote.php/webdav/\" + pm.environment.get(\"filename\"),",
+                  "  url: pm.environment.get('base_url') + \"/remote.php/webdav/\" + pm.variables.get(\"filename\"),",
                   "  header: { ",
                   "    'Authorization': pm.environment.get(\"basic_auth\")",
                   "  }",
-                  "})"
+                  "}"
                 ],
                 "type": "text/javascript"
               }
@@ -71,24 +71,22 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"username\": \"something\"\n}",
+              "raw": "lorem ipsum",
               "options": {
                 "raw": {
-                  "language": "json"
+                  "language": "text"
                 }
               }
             },
             "url": {
-              "raw": "https://localhost:9200/remote.php/webdav/test.txt",
-              "protocol": "https",
+              "raw": "{{base_url}}/remote.php/webdav/{{filename}}",
               "host": [
-                "localhost"
+                "{{base_url}}"
               ],
-              "port": "9200",
               "path": [
                 "remote.php",
                 "webdav",
-                "test.txt"
+                "{{filename}}"
               ],
               "query": [
                 {
