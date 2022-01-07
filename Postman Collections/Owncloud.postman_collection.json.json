@@ -807,7 +807,7 @@
     {
       "listen": "prerequest",
       "script": {
-        "id": "02c1c831-c664-4cf2-b334-52b627060851",
+        "id": "c2be4b55-8b79-435e-bec5-35bfecbb34eb",
         "type": "text/javascript",
         "exec": [
           "// Require the crypto-js module",
@@ -824,16 +824,6 @@
           "",
           "// set the values as an environment variable and use in the request",
           "pm.environment.set(\"basic_auth\", `Basic ${encodedCredentials}`)",
-          "",
-          "",
-          "",
-          "var optionsForFileDelete = {",
-          "  method: 'delete',",
-          "  url: pm.environment.get('base_url') + \"/remote.php/webdav/\" + pm.environment.get(\"filename\"),",
-          "  header: { ",
-          "    'Authorization': pm.environment.get(\"basic_auth\")",
-          "  }",
-          "}",
           ""
         ]
       }
@@ -841,7 +831,7 @@
     {
       "listen": "test",
       "script": {
-        "id": "61bee32d-8a07-4006-8c94-08096fa4eb6b",
+        "id": "d6c8b60b-862e-4f70-adb7-e7e3f4099901",
         "type": "text/javascript",
         "exec": [
           ""
