@@ -19,7 +19,11 @@
                   "pm.test(\"should have status code as 201\", function () {",
                   "    pm.response.to.have.status(201);",
                   "});",
-                  ""
+                  "",
+                  "",
+                  "",
+                  "",
+                  "postman.setNextRequest('get-file')"
                 ],
                 "type": "text/javascript"
               }
@@ -29,15 +33,17 @@
               "script": {
                 "id": "af903cae-5426-48c4-9914-c5c3fb3d68c8",
                 "exec": [
-                  "pm.variables.set(\"filename\", \"lorem.txt\")",
+                  "pm.environment.set(\"filename\", \"lorem.txt\")",
                   "",
                   "var options = {",
                   "  method: 'delete',",
-                  "  url: pm.environment.get('base_url') + \"/remote.php/webdav/\" + pm.variables.get(\"filename\"),",
+                  "  url: pm.environment.get('base_url') + \"/remote.php/webdav/\" + pm.environment.get(\"filename\"),",
                   "  header: { ",
                   "    'Authorization': pm.environment.get(\"basic_auth\")",
                   "  }",
-                  "}"
+                  "}",
+                  "",
+                  "pm.sendRequest(options)"
                 ],
                 "type": "text/javascript"
               }
@@ -45,7 +51,8 @@
           ],
           "id": "a7b862f9-ec41-483d-92c4-f29fae47b82e",
           "protocolProfileBehavior": {
-            "disableBodyPruning": true
+            "disableBodyPruning": true,
+            "strictSSL": false
           },
           "request": {
             "auth": {
@@ -59,14 +66,9 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Basic lsjdflsjdflsjdf=",
+                "value": "{{basic_aut}}",
                 "type": "text",
                 "disabled": true
-              },
-              {
-                "key": "",
-                "value": "",
-                "type": "text"
               }
             ],
             "body": {
