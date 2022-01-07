@@ -48,13 +48,57 @@
             "disableBodyPruning": true
           },
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": {
+                "password": "admin",
+                "username": "admin"
+              }
+            },
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic lsjdflsjdflsjdf=",
+                "type": "text",
+                "disabled": true
+              },
+              {
+                "key": "",
+                "value": "",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "lorem ipsum"
+              "raw": "{\n    \"username\": \"something\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             },
-            "url": "{{base_url}}/remote.php/webdav/{{filename}}"
+            "url": {
+              "raw": "https://localhost:9200/remote.php/webdav/test.txt",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "9200",
+              "path": [
+                "remote.php",
+                "webdav",
+                "test.txt"
+              ],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "json",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
           },
           "response": []
         },
