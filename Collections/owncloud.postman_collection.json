@@ -32,7 +32,13 @@
                 "exec": [
                   "pm.environment.set(\"filename\", \"lorem.txt\")",
                   "",
-                  "const options = optionsForFileDelete",
+                  "var options = {",
+                  "  method: 'delete',",
+                  "  url: pm.environment.get('base_url') + \"/remote.php/webdav/\" + pm.variables.get(\"filename\"),",
+                  "  header: { ",
+                  "    'Authorization': pm.environment.get(\"basic_auth\")",
+                  "  }",
+                  "}",
                   "",
                   "pm.sendRequest(options)"
                 ],
