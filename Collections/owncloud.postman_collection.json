@@ -19,7 +19,11 @@
                   "pm.test(\"should have status code as 201\", function () {",
                   "    pm.response.to.have.status(201);",
                   "});",
-                  ""
+                  "",
+                  "",
+                  "",
+                  "",
+                  "postman.setNextRequest('get-file')"
                 ],
                 "type": "text/javascript"
               }
@@ -31,13 +35,15 @@
                 "exec": [
                   "pm.environment.set(\"filename\", \"lorem.txt\")",
                   "",
-                  "pm.sendRequest({",
+                  "var options = {",
                   "  method: 'delete',",
                   "  url: pm.environment.get('base_url') + \"/remote.php/webdav/\" + pm.environment.get(\"filename\"),",
                   "  header: { ",
                   "    'Authorization': pm.environment.get(\"basic_auth\")",
                   "  }",
-                  "})"
+                  "}",
+                  "",
+                  "pm.sendRequest(options)"
                 ],
                 "type": "text/javascript"
               }
@@ -45,16 +51,54 @@
           ],
           "id": "a7b862f9-ec41-483d-92c4-f29fae47b82e",
           "protocolProfileBehavior": {
-            "disableBodyPruning": true
+            "disableBodyPruning": true,
+            "strictSSL": false
           },
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": {
+                "password": "admin",
+                "username": "admin"
+              }
+            },
             "method": "PUT",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{basic_aut}}",
+                "type": "text",
+                "disabled": true
+              }
+            ],
             "body": {
               "mode": "raw",
-              "raw": "lorem ipsum"
+              "raw": "lorem ipsum",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
             },
-            "url": "{{base_url}}/remote.php/webdav/{{filename}}"
+            "url": {
+              "raw": "{{base_url}}/remote.php/webdav/{{filename}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "remote.php",
+                "webdav",
+                "{{filename}}"
+              ],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "json",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
           },
           "response": []
         },
@@ -772,7 +816,7 @@
     {
       "listen": "prerequest",
       "script": {
-        "id": "e34ba445-9199-4b48-af26-549fc6de3fa7",
+        "id": "02c1c831-c664-4cf2-b334-52b627060851",
         "type": "text/javascript",
         "exec": [
           "// Require the crypto-js module",
@@ -789,6 +833,16 @@
           "",
           "// set the values as an environment variable and use in the request",
           "pm.environment.set(\"basic_auth\", `Basic ${encodedCredentials}`)",
+          "",
+          "",
+          "",
+          "var optionsForFileDelete = {",
+          "  method: 'delete',",
+          "  url: pm.environment.get('base_url') + \"/remote.php/webdav/\" + pm.environment.get(\"filename\"),",
+          "  header: { ",
+          "    'Authorization': pm.environment.get(\"basic_auth\")",
+          "  }",
+          "}",
           ""
         ]
       }
@@ -796,7 +850,7 @@
     {
       "listen": "test",
       "script": {
-        "id": "74b62d13-2ec0-4b55-be2f-ce59552f2441",
+        "id": "61bee32d-8a07-4006-8c94-08096fa4eb6b",
         "type": "text/javascript",
         "exec": [
           ""
