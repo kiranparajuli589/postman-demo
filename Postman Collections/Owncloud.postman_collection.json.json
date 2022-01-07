@@ -123,7 +123,6 @@
                   "",
                   "pm.test(\"should match the response href\", function () {",
                   "    var xml2JsonData = xml2Json(responseBody);",
-                  "    console.log(xml2JsonData)",
                   "    var actualHref = xml2JsonData[\"d:multistatus\"][\"d:response\"][0][\"d:href\"]",
                   "    pm.expect(actualHref).to.eq(\"/remote.php/dav/files/admin/lorem.txt\");",
                   "});"
@@ -151,7 +150,27 @@
                 "type": "default"
               }
             ],
-            "url": "{{base_url}}/remote.php/dav/files/admin/{{filename}}"
+            "url": {
+              "raw": "{{base_url}}/remote.php/dav/files/admin/{{filename}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "remote.php",
+                "dav",
+                "files",
+                "admin",
+                "{{filename}}"
+              ],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "json",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
           },
           "response": [
             {
@@ -326,6 +345,19 @@
               "body": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<d:error xmlns:d=\"DAV:\" xmlns:s=\"http://sabredav.org/ns\">\n    <s:exception>Sabre\\DAV\\Exception\\NotFound</s:exception>\n    <s:message>File with name lorem.txt could not be located</s:message>\n</d:error>"
             }
           ]
+        },
+        {
+          "name": "New Request",
+          "id": "8c9efb14-07f5-4fae-85ce-44ae73b48239",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": null
+          },
+          "response": []
         }
       ],
       "id": "9501ed42-5b31-474e-a6ea-3734cd2aaade"
