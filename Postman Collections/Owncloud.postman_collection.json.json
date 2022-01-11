@@ -806,7 +806,7 @@
             "disableBodyPruning": true
           },
           "request": {
-            "method": "GET",
+            "method": "DELETE",
             "header": [],
             "url": {
               "raw": "{{base_url}}/ocs/v2.php/cloud/users/lm10?format=json",
