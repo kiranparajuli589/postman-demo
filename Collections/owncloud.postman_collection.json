@@ -347,7 +347,7 @@
           ]
         },
         {
-          "name": "New Request",
+          "name": "asdfsdfasdfasdfasdfasdfasdfasdfa",
           "id": "8c9efb14-07f5-4fae-85ce-44ae73b48239",
           "protocolProfileBehavior": {
             "disableBodyPruning": true
@@ -806,7 +806,7 @@
             "disableBodyPruning": true
           },
           "request": {
-            "method": "GET",
+            "method": "DELETE",
             "header": [],
             "url": {
               "raw": "{{base_url}}/ocs/v2.php/cloud/users/lm10?format=json",
