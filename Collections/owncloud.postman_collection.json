@@ -839,7 +839,17 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": null
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "quota",
+                  "value": "0",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": "{{base_url}}/ocs/v2.php/cloud/users/uu1"
           },
           "response": []
         }
